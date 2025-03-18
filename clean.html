@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C.L.E.A.N. - Conservation de l'Eau À Nantes</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --secondary-color: #34a853;
+            --accent-color: #4285f4;
+            --light-blue: #e8f0fe;
+            --dark-blue: #174ea6;
+            --text-color: #333;
+            --light-text: #fff;
+            --gray-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Water Animation */
+        .water-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(26, 115, 232, 0.1) 0%, rgba(52, 168, 83, 0.05) 100%);
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Waves */
+        .wave {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%231a73e8" fill-opacity="0.2" d="M0,192L48,186.7C96,181,192,171,288,154.7C384,139,480,117,576,128C672,139,768,181,864,213.3C960,245,1056,267,1152,261.3C1248,256,1344,224,1392,208L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: 100% 100%;
+            animation: wave-animation 20s linear infinite;
+            z-index: -1;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .wave-2 {
+            animation: wave-animation 15s linear infinite;
+            opacity: 0.5;
+            bottom: -25px;
+        }
+
+        @keyframes wave-animation {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--dark-blue), var(--secondary-color));
+            color: var(--light-text);
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            background-color: #2d8e46;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .cta-button.secondary {
+            background-color: transparent;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        section:nth-child(even) {
+            background-color: var(--gray-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark-blue);
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Mission Section */
+        .mission-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .mission-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 300px;
+            max-width: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .mission-card:hover::before {
+            width: 10px;
+        }
+
+        .mission-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .mission-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .mission-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        /* Activities Section */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .activity-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-image {
+            height: 200px;
+            background-color: var(--light-blue);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-image svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            height: auto;
+            opacity: 0.8;
+        }
+
+        .activity-content {
+            padding: 25px;
+        }
+
+        .activity-content h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+
+        .activity-content p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .read-more::after {
+            content: '→';
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .read-more:hover::after {
+            transform: translateX(5px);
+        }
+
+        /* Intervention Areas */
+        .areas-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .area-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .area-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .area-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .area-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--light-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .area-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+
+        .area-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--dark-blue);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--light-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .contact-details h4 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .contact-details p {
+            color: #666;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--dark-blue);
+        }
+
+        /* Social Media */
+        .social-media {
+            margin-top: 30px;
+        }
+
+        .social-title {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: var(--dark-blue);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--light-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a2a40;
+            color: white;
+            padding: 50px 0 20px;
+            position: relative;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-logo span {
+            color: var(--secondary-color);
+        }
+
+        .footer-desc {
+            color: #c9c9c9;
+            margin-bottom: 20px;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #c9c9c9;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Animation for water drops */
+        .drops-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .drop {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: drop-fall linear infinite;
+        }
+
+        @keyframes drop-fall {
+            0% {
+                transform: translateY(-20px) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            .tagline {
+                font-size: 1.3rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                flex-direction: column;
+                background-color: white;
+                width: 70%;
+                height: 100vh;
+                padding: 20px;
+                transition: right 0.3s ease;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 20px 0;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Water Animation Effects -->
+    <div class="water-effect"></div>
+    <div class="wave"></div>
+    <div class="wave wave-2"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">C.L.E.<span>A.N.</span></a>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-links">
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#mission">Missions</a></li>
+                <li><a href="#activities">Activités</a></li>
+                <li><a href="#areas">Zones d'intervention</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#support">Soutenir</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="drops-container" id="drops-container"></div>
+        <div class="header-content">
+            <h1>Conservation de l'Eau À Nantes</h1>
+            <p class="tagline">Ensemble pour la protection de nos voies d'eau</p>
+            <div>
+                <a href="#support" class="cta-button">Nous soutenir</a>
+                <a href="#activities" class="cta-button secondary">Découvrir nos actions</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">À propos de nous</h2>
+            <div class="about-content">
+                <div class="about-text hidden">
+                    <h3>Qui sommes-nous ?</h3>
+                    <p>C.L.E.A.N. Conservation de l'Eau À Nantes est une association déclarée dont la mission principale est la protection de la nature et de l'environnement, avec un accent particulier sur la qualité des voies d'eau dans la région de Nantes, en Bretagne et Pays de la Loire.</p>
+                    <p>Fondée le 04 avril 2022, notre association s'engage à mener des études approfondies et à mettre en œuvre des actions concrètes pour lutter contre les diverses formes de pollution et les déchets qui menacent nos précieux cours d'eau.</p>
+                    <p>Face aux enjeux de la transition écologique, C.L.E.A.N. développe et déploie un programme exhaustif de prévention et de gestion des pollutions fluviales. Nous nous positionnons comme un acteur fédérateur essentiel, travaillant en étroite collaboration avec les citoyens, les collectivités territoriales, et les usagers des cours d'eau, qu'ils soient particuliers ou professionnels, afin de construire ensemble un avenir plus respectueux de notre environnement aquatique.</p>
+                </div>
+                <div class="about-image hidden">
+                    <img src="https://placehold.co/600x400/lightblue/black?text=Rivière+Nantaise" alt="Rivière de Nantes">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Missions Section -->
+    <section id="mission">
+        <div class="container">
+            <h2 class="section-title">Nos missions</h2>
+            <div class="mission-cards">
+                <div class="mission-card hidden">
+                    <div class="mission-icon">🌊</div>
+                    <h3>Protection de l'environnement</h3>
+                    <p>Notre mission première est de protéger la nature, en particulier les écosystèmes aquatiques. Nous luttons activement contre toutes les formes de pollutions, qu'elles soient fluviales ou issues de déchets, qui altèrent la qualité de nos précieuses voies d'eau. Pour ce faire, nous réalisons des études approfondies et menons des actions ciblées, afin de comprendre l'origine des problèmes, de les prévenir efficacement et de mettre en place des solutions de gestion durables.</p>
+                </div>
+                <div class="mission-card hidden">
+                    <div class="mission-icon">🌱</div>
+                    <h3>Transition écologique</h3>
+                    <p>Nous sommes convaincus que la transition écologique est essentielle pour garantir un avenir durable. C'est pourquoi C.L.E.A.N. s'engage à élaborer et à mettre en œuvre un programme ambitieux de prévention et de gestion des pollutions fluviales. Ce programme est conçu pour impliquer activement l'ensemble des acteurs concernés - citoyens, collectivités, industriels - dans une démarche collaborative et responsable, favorisant ainsi l'adoption de pratiques respectueuses de l'environnement.</p>
+                </div>
+                <div class="mission-card hidden">
+                    <div class="mission-icon">🤝</div>
+                    <h3>Rôle de fédérateur</h3>
+                    <p>La protection de l'eau est l'affaire de tous. C.L.E.A.N. se positionne comme un acteur clé pour fédérer et mobiliser les forces vives de notre territoire. Nous encourageons activement la participation citoyenne, nous collaborons étroitement avec les collectivités locales et nous ouvrons le dialogue avec les professionnels. Notre objectif est de créer une synergie collective autour des enjeux cruciaux de la qualité de l'eau, afin de construire ensemble une gestion durable et partagée de cette ressource vitale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section id="activities">
+        <div class="container">
+            <h2 class="section-title">Nos activités</h2>
+            <div class="activities-grid">
+                <div class="activity-card hidden">
+                    <div class="activity-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" stroke-width="2">
+                            <path d="M21 9.5H3m18 5H3M12 3v18m4.5-13.5l-4.5 9-4.5-9" />
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <h3>Études et analyses des pollutions</h3>
+                        <p>Nous réalisons des études approfondies pour identifier les sources, la nature et l'étendue des pollutions affectant nos cours d'eau. Ces analyses sont cruciales pour comprendre les problématiques et orienter nos actions de prévention et de gestion. Nos recherches portent sur les déchets, les rejets industriels et agricoles, et toute autre forme de pollution impactant la qualité de l'eau dans la région nantaise, en Bretagne et Pays de la Loire.</p>
+                        <a href="#" class="read-more">En savoir plus</a>
+                    </div>
+                </div>
+                <div class="activity-card hidden">
+                    <div class="activity-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" stroke-width="2">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <h3>Organisation de collectes de déchets</h3>
+                        <p>C.L.E.A.N. organise régulièrement des événements de ramassage de déchets sur les berges de nos rivières, notamment l'Erdre et la Loire, mais aussi d'autres cours d'eau de la région. Ces "clean walks" ou "éco-randos" sont des actions concrètes pour retirer les déchets qui polluent nos milieux aquatiques et sensibiliser le public à l'impact de nos déchets sur l'environnement. Nous collaborons avec des citoyens, des écoles, et d'autres associations pour maximiser l'impact de ces initiatives.</p>
+                        <a href="#" class="read-more">Participer à une collecte</a>
+                    </div>
+                </div>
+                <div class="activity-card hidden">
+                    <div class="activity-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" stroke-width="2">
+                            <path d="M19 6h-3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2z" />
+                            <path d="M15 8a3 3 0 1 0-2.83 3H6v2h6.17A3 3 0 1 0 15 8z" />
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <h3>Campagnes de sensibilisation et d'éducation</h3>
+                        <p>Nous menons des campagnes de sensibilisation auprès de différents publics (citoyens, scolaires, entreprises, collectivités) pour promouvoir les bonnes pratiques environnementales et encourager chacun à adopter un comportement écoresponsable au quotidien. Nos actions de communication visent à informer sur les enjeux de la pollution de l'eau, à expliquer les gestes simples pour la préserver, et à mobiliser le plus grand nombre autour de notre mission de conservation de l'eau.</p>
+                        <a href="#" class="read-more">Nos campagnes</a>
+                    </div>
+                </div>
+                <div class="activity-card hidden">
+                    <div class="activity-image">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1a73e8" stroke-width="2">
+                            <path d="M7 10l5-5 5 5"/>
+                            <path d="M7 14l5 5 5-5"/>
+                        </svg>
+                    </div>
+                    <div class="activity-content">
+                        <h3>Développement d'un programme de prévention des pollutions fluviales</h3>
+                        <p>Un projet majeur de C.L.E.A.N. est l'élaboration d'un programme complet et intégré de prévention et de gestion des pollutions fluviales. Ce programme vise à fournir un cadre d'action cohérent pour tous les acteurs, en proposant des solutions innovantes et adaptées aux spécificités de notre territoire. Il inclut des actions de sensibilisation, de formation, de suivi de la qualité de l'eau, et de mise en place de dispositifs de lutte contre les pollutions à la source.</p>
+                        <a href="#" class="read-more">Le programme en détail</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Intervention Areas Section -->
+    <section id="areas">
+        <div class="container">
+            <h2 class="section-title">Zones d'intervention</h2>
+            <div class="areas-container">
+                <div class="area-card hidden">
+                    <div class="area-header">
+                        <div class="area-icon">🌍</div>
+                        <h3>Métropole Nantaise</h3>
+                    </div>
+                    <p>Notre action se concentre principalement sur la métropole nantaise, riche de son réseau hydrographique dense. Nous intervenons sur l'Erdre, la Loire, la Sèvre Nantaise, et les nombreux affluents qui traversent notre territoire. La préservation de la qualité de l'eau de ces cours d'eau urbains est au cœur de nos préoccupations.</p>
+                </div>
+                <div class="area-card hidden">
+                    <div class="area-header">
+                        <div class="area-icon">🏞️</div>
+                        <h3>Bretagne & Pays de la Loire</h3>
+                    </div>
+                    <p>Bien que basée à Nantes, C.L.E.A.N. étend son champ d'action à l'ensemble des régions Bretagne et Pays de la Loire. Conscients que les problématiques de pollution de l'eau dépassent les frontières administratives, nous sommes prêts à intervenir et à collaborer avec les acteurs locaux sur l'ensemble de ces territoires, afin de contribuer à la protection de nos ressources en eau à l'échelle régionale.</p>
+                </div>
+                <div class="area-card hidden">
+                    <div class="area-header">
+                        <div class="area-icon">💧</div>
+                        <h3>Cours d'eau & Rivières</h3>
+                    </div>
+                    <p>Notre expertise et nos actions concernent spécifiquement les cours d'eau et les rivières. Ces écosystèmes fragiles sont particulièrement sensibles aux pollutions de diverses origines. C.L.E.A.N. s'engage à étudier, protéger et restaurer ces milieux aquatiques essentiels à la biodiversité et à la qualité de notre environnement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contactez-nous</h2>
+            <div class="contact-container">
+                <div class="contact-info hidden">
+                    <h3>Informations de contact</h3>
+                    <p>N'hésitez pas à nous contacter pour toute question, demande de partenariat, ou pour rejoindre notre équipe de bénévoles.</p>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h4>Téléphone</h4>
+                            <p><a href="tel:0676695026">06 76 69 50 26</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p><a href="mailto:clean.eau.nantes@gmail.com">clean.eau.nantes@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Adresse postale</h4>
+                            <p>1 Quai André Rhuys,<br>44300 Nantes, France</p>
+                            <p>(Siège social - pour correspondance)</p>
+                        </div>
+                    </div>
+                    <div class="social-media">
+                        <h3 class="social-title">Suivez-nous sur les réseaux sociaux</h3>
+                        <div class="social-icons">
+                            <a href="https://www.instagram.com/clean.eau.nantes/" class="social-icon" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. --><path fill="currentColor" d="M224,202.7c-34.7,0-63-28.3-63-63s28.3-63,63-63,63,28.3,63,63S258.7,202.7,224,202.7Zm144-24.7V480H80V178L149.1,111h77.8L368,178ZM408,72V408c0,13.3-10.7,24-24,24H64c-13.3,0-24-10.7-24-24V72c0-13.3,10.7-24,24-24H384C397.3,48,408,58.7,408,72Z"/></svg></a>
+                            <!-- Add other social media icons here if available -->
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form hidden">
+                    <h3>Formulaire de contact</h3>
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" style="background-color: var(--gray-bg);">
+        <div class="container">
+            <h2 class="section-title">Soutenez notre action</h2>
+            <div class="about-content">
+                <div class="about-text hidden">
+                    <h3>Comment nous soutenir ?</h3>
+                    <p>Votre soutien est essentiel pour nous permettre de poursuivre et de développer nos actions en faveur de la conservation de l'eau. Vous pouvez contribuer de différentes manières :</p>
+                    <h4>Faire un don</h4>
+                    <p>Votre don financier, même modeste, nous aide concrètement à financer nos études, nos campagnes de sensibilisation et nos actions de nettoyage. Vous pouvez faire un don en ligne via la plateforme HelloAsso, partenaire solidaire des associations :</p>
+                    <p><a href="https://www.helloasso.com/associations/clean-conservation-de-l-eau-a-nantes/formulaires/1" class="cta-button secondary" target="_blank">Faire un don sur HelloAsso</a></p>
+
+                    <h4>Devenir bénévole</h4>
+                    <p>Rejoignez notre équipe de bénévoles et participez activement à nos actions sur le terrain ! Que ce soit pour les collectes de déchets, les événements de sensibilisation, ou pour apporter vos compétences spécifiques, votre engagement est précieux. Contactez-nous pour connaître les prochaines opportunités de bénévolat.</p>
+                    <p><a href="#contact" class="cta-button secondary">Devenir bénévole</a></p>
+
+                </div>
+                <div class="about-image hidden">
+                    <img src="https://placehold.co/600x400/lightgreen/black?text=Soutenez+C.L.E.A.N." alt="Soutenez C.L.E.A.N.">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-column">
+                <a href="#" class="footer-logo">C.L.E.<span>A.N.</span></a>
+                <p class="footer-desc">Association pour la Conservation de l'Eau à Nantes et sa région. Ensemble, agissons pour la protection de nos cours d'eau et de notre environnement.</p>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Liens utiles</h4>
+                <ul class="footer-links">
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#mission">Nos missions</a></li>
+                    <li><a href="#activities">Nos activités</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#support">Soutenez-nous</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:clean.eau.nantes@gmail.com">clean.eau.nantes@gmail.com</a></li>
+                    <li><a href="tel:0676695026">06 76 69 50 26</a></li>
+                    <li>1 Quai André Rhuys, 44300 Nantes</li>
+                </ul>
+            </div>
+        </div>
+        <p class="copyright">© 2024 C.L.E.A.N. - Conservation de l'Eau À Nantes. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropsContainer = document.getElementById('drops-container');
+            if (dropsContainer) {
+                for (let i = 0; i < 50; i++) {
+                    const drop = document.createElement('div');
+                    drop.classList.add('drop');
+                    drop.style.left = `${Math.random() * 100}vw`;
+                    drop.style.animationDelay = `${Math.random() * 2}s`;
+                    drop.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                    dropsContainer.appendChild(drop);
+                }
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        entry.target.classList.remove('hidden');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            const hiddenElements = document.querySelectorAll('.hidden');
+            hiddenElements.forEach((el) => observer.observe(el));
+
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+
+            if (mobileMenuBtn && navLinks) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</body>
+</html>
