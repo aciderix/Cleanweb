@@ -1,0 +1,26 @@
+backend:
+  name: git-gateway
+  branch: main # Branche sur laquelle les modifications seront poussées
+  auth_scope: repo # Permission GitHub pour les repos privés si nécessaire
+
+# Activer l'éditeur éditorial
+publish_mode: editorial_workflow
+
+media_folder: "images/uploads" # Dossier où seront stockées les images téléchargées
+public_folder: "/images/uploads" # URL publique pour les images
+
+collections:
+  - name: "events"
+    label: "Événements"
+    folder: "_events"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Titre", name: "title", widget: "string"}
+      - {label: "Date d'événement", name: "date", widget: "string", hint: "Exemple: Prochainement, À venir, 12 Juin 2025, etc."}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Image", name: "image", widget: "image", required: false}
+      - {label: "Lien", name: "link", widget: "string", default: "#contact"}
+      - {label: "Texte du lien", name: "linkText", widget: "string", default: "Plus d'informations"}
+      - {label: "Publication date", name: "publishDate", widget: "datetime"}
+      - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1} 

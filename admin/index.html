@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Administration C.L.E.A.N.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Chargement du script Netlify Identity -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Chargement des styles Netlify CMS -->
+  <link href="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.css" rel="stylesheet" type="text/css" />
+  <style>
+    .header {
+      background-color: #1a7ba3;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Administration C.L.E.A.N.</h1>
+  </div>
+  <!-- Chargement du script Netlify CMS -->
+  <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script>
+    // Importation des collections personnalisées
+    import('./collections/events.js');
+  </script>
+</body>
+</html> 

@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Première Éco-Navigation avec La Toue",
+    "date": "Prochainement",
+    "description": "Venez découvrir notre nouvelle formule de nettoyage de l'Erdre à bord de La Toue. Une expérience unique alliant action écologique et découverte du patrimoine fluvial.",
+    "image": "/images/uploads/bateau.png",
+    "link": "#contact",
+    "linkText": "Se tenir informé",
+    "order": 1
+  },
+  {
+    "title": "Rendez-vous de l'Erdre",
+    "date": "À venir",
+    "description": "Retrouvez-nous lors des Rendez-vous de l'Erdre pour échanger sur nos actions et découvrir comment participer à la préservation de nos rivières.",
+    "image": "/images/uploads/sensibilisation.jpg",
+    "link": "#contact",
+    "linkText": "Plus d'informations",
+    "order": 2
+  },
+  {
+    "title": "Collectes sur l'Erdre",
+    "date": "En continu",
+    "description": "Nos actions de collecte se poursuivent régulièrement sur l'Erdre. Contactez-nous pour connaître les prochaines dates et rejoindre notre équipe de bénévoles.",
+    "image": "/images/uploads/bac.jpg",
+    "link": "#contact",
+    "linkText": "Nous contacter",
+    "order": 3
+  }
+] 

@@ -1,0 +1,16 @@
+{
+  "name": "clean-website",
+  "version": "1.0.0",
+  "description": "Site web de l'association C.L.E.A.N.",
+  "main": "index.js",
+  "scripts": {
+    "build": "node netlify/functions/generate-events.js",
+    "start": "http-server -p 8080"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+} 
