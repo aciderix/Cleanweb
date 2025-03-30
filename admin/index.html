@@ -16,6 +16,15 @@
     .header h1 {
       margin: 0;
     }
+    .info-box {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-left: 5px solid #1a7ba3;
+      border-radius: 3px;
+      font-family: Arial, sans-serif;
+    }
   </style>
 </head>
 <body>
@@ -23,45 +32,9 @@
     <h1>Administration C.L.E.A.N.</h1>
   </div>
   
-  <!-- Script Auth0 chargé avant Netlify CMS -->
-  <script src="https://cdn.auth0.com/js/auth0/9.14/auth0.min.js"></script>
-  
-  <script>
-    // On s'assure que l'objet auth0 est bien disponible
-    if (typeof auth0 !== 'undefined') {
-      // Définir une fonction globale pour l'authentification
-      window.handleAuth0Login = function() {
-        const webAuth = new auth0.WebAuth({
-          domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
-          clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
-          redirectUri: 'https://clean-eau-nantes.netlify.app/admin/callback',
-          responseType: 'token id_token',
-          scope: 'openid profile email'
-        });
-        
-        webAuth.authorize();
-      };
-      
-      // Créer un bouton d'authentification manuel
-      const loginButton = document.createElement('button');
-      loginButton.textContent = 'Se connecter avec Auth0';
-      loginButton.style.padding = '10px 20px';
-      loginButton.style.margin = '20px auto';
-      loginButton.style.display = 'block';
-      loginButton.style.backgroundColor = '#1a7ba3';
-      loginButton.style.color = 'white';
-      loginButton.style.border = 'none';
-      loginButton.style.borderRadius = '4px';
-      loginButton.style.cursor = 'pointer';
-      
-      loginButton.addEventListener('click', window.handleAuth0Login);
-      
-      // Insérer le bouton avant le header
-      document.querySelector('.header').after(loginButton);
-    } else {
-      console.error("La bibliothèque Auth0 n'est pas chargée correctement.");
-    }
-  </script>
+  <div class="info-box">
+    <p>Vous allez être redirigé vers GitHub pour vous authentifier. Une fois connecté, vous pourrez gérer les événements du site.</p>
+  </div>
   
   <!-- Chargement du script Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>

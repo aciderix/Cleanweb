@@ -3,7 +3,8 @@ backend:
   name: github
   repo: aciderix/Cleanweb
   branch: main
-  auth_endpoint: api/auth
+  client_id: Ov23lixJWesYNuUHu8hP
+  base_url: https://api.netlify.com
 
 # Pour le développement local, vous pouvez décommenter la ligne ci-dessous
 # et commenter les lignes ci-dessus

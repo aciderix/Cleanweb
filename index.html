@@ -6,7 +6,6 @@
     <title>C.L.E.A.N. - Zéro Déchet pour les Rivières de Nantes</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.auth0.com/js/auth0/9.14/auth0.min.js"></script>
 </head>
 <body>
     <!-- Water Animation Effects -->
@@ -387,21 +386,19 @@
     <script src="script.js"></script>
     <script src="events.js"></script>
     <script>
-        // Configuration Auth0
-        const auth0 = new auth0.WebAuth({
-            domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
-            clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
-            redirectUri: 'https://clean-eau-nantes.netlify.app/admin/callback',
-            responseType: 'token id_token',
-            scope: 'openid profile email'
+        // Ajout d'un lien vers l'interface d'administration dans le menu de navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks) {
+                const adminLi = document.createElement('li');
+                const adminLink = document.createElement('a');
+                adminLink.href = '/admin/';
+                adminLink.textContent = 'Admin';
+                adminLink.style.fontWeight = 'bold';
+                adminLi.appendChild(adminLink);
+                navLinks.appendChild(adminLi);
+            }
         });
-        
-        // Gestion du bouton d'administration (à ajouter si nécessaire dans votre navbar)
-        if (document.querySelector('.admin-button')) {
-            document.querySelector('.admin-button').addEventListener('click', function() {
-                auth0.authorize();
-            });
-        }
     </script>
 </body>
 </html>
