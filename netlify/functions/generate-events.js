@@ -23,7 +23,8 @@ exports.handler = async function(event, context) {
           image: data.image,
           link: data.link || '#contact',
           linkText: data.linkText || "Plus d'informations",
-          order: data.order || 999
+          order: data.order || 999,
+          publishDate: data.publishDate
         };
       });
     
@@ -42,15 +43,43 @@ exports.handler = async function(event, context) {
       JSON.stringify(events, null, 2)
     );
     
+    console.log('Fichier events.json généré avec succès');
+    
+    // Ajouter un timestamp aléatoire pour éviter la mise en cache du navigateur
+    const timestamp = Date.now();
+    
+    // Ajouter un code JavaScript pour forcer le rechargement de la page d'accueil
+    fs.writeFileSync(
+      path.join(__dirname, '../..', 'refresh.js'),
+      `// Timestamp: ${timestamp}
+// Ce fichier est généré automatiquement pour forcer le rechargement des événements
+console.log("Événements mis à jour le ${new Date().toLocaleString()}");`
+    );
+    
     return {
       statusCode: 200,
-      body: JSON.stringify({ success: true })
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        success: true,
+        timestamp: timestamp,
+        message: 'Événements générés avec succès',
+        count: events.length
+      })
     };
   } catch (error) {
     console.error('Erreur:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message })
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        error: error.message,
+        stack: error.stack
+      })
     };
   }
 }; 

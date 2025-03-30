@@ -1,21 +1,31 @@
 [build]
+  command = "npm run build"
   publish = "."
-  command = "npm install && node netlify/functions/generate-events.js"
+  functions = "netlify/functions"
 
 [functions]
   directory = "netlify/functions"
 
 [[redirects]]
   from = "/admin/*"
-  to = "/admin/index.html"
-  status = 200
-
-[[redirects]]
-  from = "/api/auth"
-  to = "/.netlify/functions/auth"
+  to = "/admin/:splat"
   status = 200
 
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
-  status = 200 
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "16"
+
+# Déclenchement de la fonction generate-events après chaque publication
+[[plugins]]
+  package = "@netlify/plugin-functions-core"
+
+[[plugins]]
+  package = "@netlify/plugin-local-install-core"
+
+# Génération des événements après chaque déploiement
+[[plugins]]
+  package = "./netlify/plugins/trigger-events-generation" 

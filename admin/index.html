@@ -25,6 +25,13 @@
       border-radius: 3px;
       font-family: Arial, sans-serif;
     }
+    .nc-app-header {
+      background-color: #3498db !important;
+    }
+    
+    .nc-githubAuthenticationPage-buttonIcon {
+      margin-right: 5px;
+    }
   </style>
 </head>
 <body>
@@ -38,5 +45,37 @@
   
   <!-- Chargement du script Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+  
+  <script>
+    // Configuration pour l'authentification GitHub
+    const { CMS, initCMS: init } = window.NetlifyCMS;
+    
+    // Configuration des hooks pour mise à jour automatique
+    CMS.registerEventListener({
+      name: 'preSave',
+      handler: async ({ entry }) => {
+        console.log('Sauvegarde en cours...', entry);
+        return entry;
+      },
+    });
+    
+    CMS.registerEventListener({
+      name: 'postPublish',
+      handler: async ({ entry }) => {
+        console.log('Publication effectuée, mise à jour des événements...');
+        try {
+          // Déclencher la régénération des fichiers JSON
+          const response = await fetch('/.netlify/functions/generate-events');
+          const data = await response.json();
+          console.log('Mise à jour des événements terminée:', data);
+        } catch (error) {
+          console.error('Erreur lors de la mise à jour:', error);
+        }
+      },
+    });
+    
+    // Initialisation du CMS
+    init();
+  </script>
 </body>
 </html> 

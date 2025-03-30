@@ -1,0 +1,14 @@
+{
+  "name": "netlify-plugin-trigger-events-generation",
+  "version": "1.0.0",
+  "description": "Plugin Netlify pour générer automatiquement le fichier events.json après chaque déploiement",
+  "main": "index.js",
+  "author": "CLEAN",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2"
+  }
+} 

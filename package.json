@@ -1,14 +1,18 @@
 {
-  "name": "clean-website",
+  "name": "clean-site",
   "version": "1.0.0",
-  "description": "Site web de l'association C.L.E.A.N.",
+  "description": "Site web de l'association CLEAN",
   "main": "index.js",
   "scripts": {
-    "build": "node netlify/functions/generate-events.js",
-    "start": "http-server -p 8080"
+    "dev": "npx netlify-cms-proxy-server",
+    "build": "node netlify/functions/generate-events.js"
   },
   "dependencies": {
-    "gray-matter": "^4.0.3"
+    "gray-matter": "^4.0.3",
+    "netlify-cms-app": "^2.15.72",
+    "netlify-identity-widget": "^1.9.2",
+    "@netlify/plugin-functions-core": "^1.0.0",
+    "@netlify/plugin-local-install-core": "^1.0.0"
   },
   "devDependencies": {
     "http-server": "^14.1.1"
