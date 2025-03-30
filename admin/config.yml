@@ -1,7 +1,10 @@
 backend:
-  name: git-gateway
-  branch: main # Branche sur laquelle les modifications seront poussées
-  auth_scope: repo # Permission GitHub pour les repos privés si nécessaire
+  name: github
+  repo: aciderix/Cleanweb
+  branch: main
+  base_url: https://clean-eau-nantes.netlify.app
+  auth_endpoint: api/auth
+  auth_scope: repo
 
 # Activer l'éditeur éditorial
 publish_mode: editorial_workflow

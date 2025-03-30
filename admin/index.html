@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <title>Administration C.L.E.A.N.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Chargement du script Netlify Identity -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <!-- Chargement des styles Netlify CMS -->
+  <!-- Remplacer Netlify Identity par Auth0 -->
+  <script src="https://cdn.auth0.com/js/auth0/9.14/auth0.min.js"></script>
   <link href="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.css" rel="stylesheet" type="text/css" />
   <style>
     .header {
@@ -27,11 +26,29 @@
   </div>
   <!-- Chargement du script Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
-  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   <script>
-    // Importation des collections personnalisées
-    import('./collections/events.js');
+    // Configuration Auth0 pour Netlify CMS
+    const auth0 = new auth0.WebAuth({
+      domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
+      clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
+      redirectUri: 'https://clean-eau-nantes.netlify.app/admin/callback',
+      responseType: 'token id_token',
+      scope: 'openid profile email'
+    });
+    
+    // Initialisation de Netlify CMS avec Auth0
+    window.netlifyIdentity = {
+      on: (event, cb) => {
+        if (event === 'init') {
+          cb(null);
+        }
+      },
+      logout: () => {
+        auth0.logout({
+          returnTo: 'https://clean-eau-nantes.netlify.app'
+        });
+      }
+    };
   </script>
 </body>
 </html> 

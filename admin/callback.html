@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Authentification terminée</title>
+  <script src="https://cdn.auth0.com/js/auth0/9.14/auth0.min.js"></script>
+</head>
+<body>
+  <script>
+    const auth0 = new auth0.WebAuth({
+      domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
+      clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC'
+    });
+    
+    auth0.parseHash((err, result) => {
+      if (result && result.accessToken && result.idToken) {
+        window.localStorage.setItem('accessToken', result.accessToken);
+        window.localStorage.setItem('idToken', result.idToken);
+        window.localStorage.setItem('profile', JSON.stringify(result.idTokenPayload));
+      }
+      window.location.href = '/admin/';
+    });
+  </script>
+</body>
+</html> 
