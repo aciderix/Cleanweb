@@ -19,13 +19,6 @@
 [build.environment]
   NODE_VERSION = "16"
 
-# Déclenchement de la fonction generate-events après chaque publication
-[[plugins]]
-  package = "@netlify/plugin-functions-core"
-
-[[plugins]]
-  package = "@netlify/plugin-local-install-core"
-
-# Génération des événements après chaque déploiement
-[[plugins]]
-  package = "./netlify/plugins/trigger-events-generation" 
+# Utiliser un script de build personnalisé pour générer les événements
+[build.processing]
+  skip_processing = false 

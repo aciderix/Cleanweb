@@ -62,12 +62,19 @@
     CMS.registerEventListener({
       name: 'postPublish',
       handler: async ({ entry }) => {
-        console.log('Publication effectuée, mise à jour des événements...');
+        console.log('Publication effectuée, attendez la fin du déploiement...');
         try {
-          // Déclencher la régénération des fichiers JSON
-          const response = await fetch('/.netlify/functions/generate-events');
-          const data = await response.json();
-          console.log('Mise à jour des événements terminée:', data);
+          // Notifier l'utilisateur que les changements seront visibles après le déploiement
+          alert('Votre modification a été enregistrée ! Les changements seront visibles sur le site après le déploiement complet (environ 1-2 minutes). Vous devrez peut-être actualiser la page d\'accueil pour voir les changements.');
+          
+          // Essayer d'appeler la fonction si disponible
+          try {
+            const response = await fetch('/.netlify/functions/generate-events');
+            const data = await response.json();
+            console.log('Mise à jour des événements terminée:', data);
+          } catch (e) {
+            console.log('La fonction de génération sera exécutée lors du déploiement');
+          }
         } catch (error) {
           console.error('Erreur lors de la mise à jour:', error);
         }
