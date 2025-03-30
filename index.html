@@ -385,20 +385,5 @@
 
     <script src="script.js"></script>
     <script src="events.js"></script>
-    <script>
-        // Ajout d'un lien vers l'interface d'administration dans le menu de navigation
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks) {
-                const adminLi = document.createElement('li');
-                const adminLink = document.createElement('a');
-                adminLink.href = '/admin/';
-                adminLink.textContent = 'Admin';
-                adminLink.style.fontWeight = 'bold';
-                adminLi.appendChild(adminLink);
-                navLinks.appendChild(adminLi);
-            }
-        });
-    </script>
 </body>
 </html>
