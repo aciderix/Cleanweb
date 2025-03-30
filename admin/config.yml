@@ -5,6 +5,13 @@ backend:
   branch: main
   client_id: Ov23lixJWesYNuUHu8hP
   base_url: https://api.netlify.com
+  # Configuration des messages de commit
+  commit_messages:
+    create: "Create {{collection}} "{{slug}}""
+    update: "Update {{collection}} "{{slug}}""
+    delete: "Delete {{collection}} "{{slug}}""
+    uploadMedia: "Upload "{{path}}""
+    deleteMedia: "Delete "{{path}}""
 
 # Pour le développement local, vous pouvez décommenter la ligne ci-dessous
 # et commenter les lignes ci-dessus
@@ -16,6 +23,11 @@ publish_mode: editorial_workflow
 
 media_folder: "images/uploads" # Dossier où seront stockées les images téléchargées
 public_folder: "/images/uploads" # URL publique pour les images
+
+# Configuration pour déclencher la régénération des événements après chaque modification
+hooks:
+  afterChange:
+    - trigger: 'api/regenerate-events'
 
 collections:
   - name: "events"
