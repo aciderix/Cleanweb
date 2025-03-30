@@ -1,10 +1,14 @@
+# En production, utilisez le backend GitHub avec Auth0
 backend:
   name: github
   repo: aciderix/Cleanweb
   branch: main
-  base_url: https://clean-eau-nantes.netlify.app
   auth_endpoint: api/auth
-  auth_scope: repo
+
+# Pour le développement local, vous pouvez décommenter la ligne ci-dessous
+# et commenter les lignes ci-dessus
+# backend:
+#   name: test-repo
 
 # Activer l'éditeur éditorial
 publish_mode: editorial_workflow

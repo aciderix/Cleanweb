@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>Administration C.L.E.A.N.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Remplacer Netlify Identity par Auth0 -->
-  <script src="https://cdn.auth0.com/js/auth0/9.14/auth0.min.js"></script>
   <link href="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.css" rel="stylesheet" type="text/css" />
   <style>
     .header {
@@ -24,31 +22,48 @@
   <div class="header">
     <h1>Administration C.L.E.A.N.</h1>
   </div>
+  
+  <!-- Script Auth0 chargé avant Netlify CMS -->
+  <script src="https://cdn.auth0.com/js/auth0/9.14/auth0.min.js"></script>
+  
+  <script>
+    // On s'assure que l'objet auth0 est bien disponible
+    if (typeof auth0 !== 'undefined') {
+      // Définir une fonction globale pour l'authentification
+      window.handleAuth0Login = function() {
+        const webAuth = new auth0.WebAuth({
+          domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
+          clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
+          redirectUri: 'https://clean-eau-nantes.netlify.app/admin/callback',
+          responseType: 'token id_token',
+          scope: 'openid profile email'
+        });
+        
+        webAuth.authorize();
+      };
+      
+      // Créer un bouton d'authentification manuel
+      const loginButton = document.createElement('button');
+      loginButton.textContent = 'Se connecter avec Auth0';
+      loginButton.style.padding = '10px 20px';
+      loginButton.style.margin = '20px auto';
+      loginButton.style.display = 'block';
+      loginButton.style.backgroundColor = '#1a7ba3';
+      loginButton.style.color = 'white';
+      loginButton.style.border = 'none';
+      loginButton.style.borderRadius = '4px';
+      loginButton.style.cursor = 'pointer';
+      
+      loginButton.addEventListener('click', window.handleAuth0Login);
+      
+      // Insérer le bouton avant le header
+      document.querySelector('.header').after(loginButton);
+    } else {
+      console.error("La bibliothèque Auth0 n'est pas chargée correctement.");
+    }
+  </script>
+  
   <!-- Chargement du script Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
-  <script>
-    // Configuration Auth0 pour Netlify CMS
-    const auth0 = new auth0.WebAuth({
-      domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
-      clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
-      redirectUri: 'https://clean-eau-nantes.netlify.app/admin/callback',
-      responseType: 'token id_token',
-      scope: 'openid profile email'
-    });
-    
-    // Initialisation de Netlify CMS avec Auth0
-    window.netlifyIdentity = {
-      on: (event, cb) => {
-        if (event === 'init') {
-          cb(null);
-        }
-      },
-      logout: () => {
-        auth0.logout({
-          returnTo: 'https://clean-eau-nantes.netlify.app'
-        });
-      }
-    };
-  </script>
 </body>
 </html> 

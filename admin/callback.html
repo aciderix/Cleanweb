@@ -4,21 +4,65 @@
   <meta charset="UTF-8">
   <title>Authentification terminée</title>
   <script src="https://cdn.auth0.com/js/auth0/9.14/auth0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #1a7ba3;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
+  <h2>Authentification en cours...</h2>
+  <div class="loader"></div>
+  <p>Vous allez être redirigé vers l'interface d'administration.</p>
+  
   <script>
-    const auth0 = new auth0.WebAuth({
-      domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
-      clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC'
-    });
-    
-    auth0.parseHash((err, result) => {
-      if (result && result.accessToken && result.idToken) {
-        window.localStorage.setItem('accessToken', result.accessToken);
-        window.localStorage.setItem('idToken', result.idToken);
-        window.localStorage.setItem('profile', JSON.stringify(result.idTokenPayload));
-      }
-      window.location.href = '/admin/';
+    window.addEventListener('load', function() {
+      const webAuth = new auth0.WebAuth({
+        domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
+        clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
+        redirectUri: 'https://clean-eau-nantes.netlify.app/admin/callback'
+      });
+      
+      webAuth.parseHash(function(err, authResult) {
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          // Stocker les jetons d'authentification
+          localStorage.setItem('access_token', authResult.accessToken);
+          localStorage.setItem('id_token', authResult.idToken);
+          localStorage.setItem('expires_at', JSON.stringify(
+            authResult.expiresIn * 1000 + new Date().getTime()
+          ));
+          
+          // Stocker les informations utilisateur
+          if (authResult.idTokenPayload) {
+            localStorage.setItem('user_name', authResult.idTokenPayload.name || authResult.idTokenPayload.email);
+            localStorage.setItem('user_email', authResult.idTokenPayload.email);
+          }
+          
+          console.log('Authentification réussie');
+          
+          // Rediriger vers l'interface d'administration
+          window.location.href = '/admin/';
+        } else if (err) {
+          console.error('Erreur d\'authentification:', err);
+          alert('Une erreur s\'est produite lors de l\'authentification. Veuillez réessayer.');
+          window.location.href = '/admin/';
+        }
+      });
     });
   </script>
 </body>
