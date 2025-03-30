@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!eventsContainer) return;
   
   try {
-    // Récupérer les événements depuis le dossier _events
-    const response = await fetch('/api/events.json');
+    // Ajouter un paramètre timestamp pour éviter la mise en cache
+    const timestamp = new Date().getTime();
+    const response = await fetch(`/api/events.json?t=${timestamp}`);
     
     if (!response.ok) {
       throw new Error('Erreur lors du chargement des événements');
@@ -15,6 +16,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Vider le contenu actuel
     eventsContainer.innerHTML = '';
+    
+    if (events.length === 0) {
+      // Afficher un message si aucun événement n'est disponible
+      eventsContainer.innerHTML = '<div class="event-card show"><h3>Aucun événement à venir pour le moment</h3><p>Consultez cette page ultérieurement pour découvrir nos prochains événements.</p></div>';
+      return;
+    }
     
     // Trier les événements par ordre
     events.sort((a, b) => a.order - b.order);
@@ -44,6 +51,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       eventsContainer.appendChild(eventCard);
     });
     
+    // Afficher un message de débogage dans la console
+    console.log(`${events.length} événements chargés à ${new Date().toLocaleTimeString()}`);
+    
     // Réinitialiser l'observateur pour les nouveaux éléments
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -60,5 +70,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
   } catch (error) {
     console.error('Erreur:', error);
+    // Afficher un message d'erreur dans le conteneur
+    eventsContainer.innerHTML = `<div class="event-card show"><h3>Erreur lors du chargement des événements</h3><p>Veuillez actualiser la page et réessayer. Message d'erreur: ${error.message}</p></div>`;
   }
 }); 
