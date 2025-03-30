@@ -28,7 +28,7 @@ public_folder: "/images/uploads" # URL publique pour les images
 # Configuration pour déclencher la régénération des événements après chaque modification
 hooks:
   afterChange:
-    - trigger: 'api/regenerate-events'
+    - trigger: '/.netlify/functions/regenerate-events'
 
 collections:
   - name: "events"

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx netlify-cms-proxy-server",
-    "build": "node netlify/functions/generate-events.js"
+    "build": "node netlify/functions/regenerate-events.js",
+    "generate-events": "node netlify/functions/regenerate-events.js"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

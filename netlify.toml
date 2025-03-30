@@ -5,6 +5,7 @@
 
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/admin/*"
@@ -19,6 +20,10 @@
 [build.environment]
   NODE_VERSION = "16"
 
-# Utiliser un script de build personnalisé pour générer les événements
+# Permettre l'exécution de fonctions après chaque déploiement
 [build.processing]
-  skip_processing = false 
+  skip_processing = false
+
+# Configurer le plugin de génération des événements
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
