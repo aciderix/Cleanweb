@@ -27,28 +27,30 @@
   <!-- Chargement du script Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
   <script>
-    // Configuration Auth0 pour Netlify CMS
-    const auth0 = new auth0.WebAuth({
-      domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
-      clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
-      redirectUri: 'https://clean-eau-nantes.netlify.app/admin/callback',
-      responseType: 'token id_token',
-      scope: 'openid profile email'
-    });
-    
-    // Initialisation de Netlify CMS avec Auth0
-    window.netlifyIdentity = {
-      on: (event, cb) => {
-        if (event === 'init') {
-          cb(null);
+    document.addEventListener('DOMContentLoaded', function() {
+      // Configuration Auth0 pour Netlify CMS
+      const auth0 = new auth0.WebAuth({
+        domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
+        clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
+        redirectUri: 'https://clean-eau-nantes.netlify.app/admin/callback',
+        responseType: 'token id_token',
+        scope: 'openid profile email'
+      });
+      
+      // Initialisation de Netlify CMS avec Auth0
+      window.netlifyIdentity = {
+        on: (event, cb) => {
+          if (event === 'init') {
+            cb(null);
+          }
+        },
+        logout: () => {
+          auth0.logout({
+            returnTo: 'https://clean-eau-nantes.netlify.app'
+          });
         }
-      },
-      logout: () => {
-        auth0.logout({
-          returnTo: 'https://clean-eau-nantes.netlify.app'
-        });
-      }
-    };
+      };
+    });
   </script>
 </body>
 </html> 
