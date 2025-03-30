@@ -25,10 +25,8 @@ publish_mode: editorial_workflow
 media_folder: "images/uploads" # Dossier où seront stockées les images téléchargées
 public_folder: "/images/uploads" # URL publique pour les images
 
-# Configuration pour déclencher la régénération des événements après chaque modification
-hooks:
-  afterChange:
-    - trigger: '/.netlify/functions/regenerate-events'
+# La méthode la plus simple : Ne pas utiliser de webhook, car GitHub Actions
+# va automatiquement s'exécuter quand un fichier dans _events est modifié
 
 collections:
   - name: "events"
