@@ -10,7 +10,7 @@ const { MongoClient } = require('mongodb');
 
 // URL de connexion MongoDB
 const MONGODB_URI = process.env.MONGODB_URI;
-const DB_NAME = 'clean';
+const DB_NAME = 'Clean';
 const COLLECTION_NAME = 'events';
 
 exports.handler = async function(event, context) {

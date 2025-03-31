@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     // Ajouter un paramètre timestamp pour éviter la mise en cache
     const timestamp = new Date().getTime();
-    const response = await fetch(`/api/get-events?t=${timestamp}`);
+    const response = await fetch(`/.netlify/functions/get-events?t=${timestamp}`);
     
     if (!response.ok) {
       throw new Error('Erreur lors du chargement des événements');

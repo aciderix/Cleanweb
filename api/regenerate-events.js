@@ -63,7 +63,7 @@ exports.handler = async function(event, context) {
     
     // Ajouter un code JavaScript pour forcer le rechargement de la page d'accueil
     fs.writeFileSync(
-      path.join(__dirname, '..', 'refresh.js'),
+      path.join(__dirname, '../..', 'refresh.js'),
       `// Timestamp: ${timestamp}
 // Ce fichier est généré automatiquement pour forcer le rechargement des événements
 console.log("Événements mis à jour le ${new Date().toLocaleString()}");`
