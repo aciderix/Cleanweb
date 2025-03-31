@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx netlify-cms-proxy-server",
-    "build": "node netlify/functions/regenerate-events.js && mkdir -p _events_copy && cp -r _events/* _events_copy/ && ls -la _events_copy",
+    "build": "node netlify/functions/regenerate-events.js",
     "generate-events": "node netlify/functions/regenerate-events.js",
     "migrate-to-mongodb": "node scripts/migrate-to-mongodb.js",
     "start": "netlify dev",
@@ -25,6 +25,7 @@
     "node-fetch": "^2.6.7"
   },
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "netlify-cli": "^15.0.0"
   }
 }

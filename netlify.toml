@@ -7,22 +7,6 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-[[redirects]]
-  from = "/admin/*"
-  to = "/admin/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/get-events"
-  to = "/.netlify/functions/get-events"
-  status = 200
-  force = true
-
 [build.environment]
   NODE_VERSION = "16"
 
@@ -30,11 +14,26 @@
 [build.processing]
   skip_processing = false
 
-# Configurer le plugin de génération des événements
-[[plugins]]
-  package = "@netlify/plugin-functions-core"
+# Redirection pour l'interface admin
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  status = 200
 
-# Redirection pour l'API des événements
+# Redirection pour les fonctions API
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Redirection pour la récupération des événements (ancienne méthode)
+[[redirects]]
+  from = "/get-events"
+  to = "/.netlify/functions/get-events"
+  status = 200
+  force = true
+
+# Redirection pour l'API des événements MongoDB
 [[redirects]]
   from = "/api/events/*"
   to = "/.netlify/functions/get-events-mongodb"
