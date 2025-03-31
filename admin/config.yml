@@ -64,4 +64,14 @@ collections:
       - {label: "Image", name: "image", widget: "image"}
       - {label: "Lien", name: "link", widget: "string", default: "#contact"}
       - {label: "Texte du lien", name: "linkText", widget: "string", default: "En savoir plus"}
+      - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1}
+  - name: "intervention_zones"
+    label: "Zones d'intervention"
+    folder: "_intervention_zones"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Titre", name: "title", widget: "string"}
+      - {label: "Icône", name: "icon", widget: "string", hint: "Emoji à utiliser (ex: 🌍, 🏞️, 💧)"}
+      - {label: "Description", name: "description", widget: "text"}
       - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1} 
