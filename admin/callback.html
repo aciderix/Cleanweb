@@ -23,18 +23,41 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    .error {
+      color: #d32f2f;
+      background-color: #ffebee;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 20px auto;
+      max-width: 500px;
+    }
   </style>
 </head>
 <body>
   <h2>Authentification en cours...</h2>
   <div class="loader"></div>
   <p>Vous allez être redirigé vers l'interface d'administration.</p>
+  <div id="error-container" style="display: none;" class="error"></div>
   
   <script>
+    // Ces valeurs doivent être injectées lors du build par Netlify
+    const AUTH0_DOMAIN = '%%AUTH0_DOMAIN%%';
+    const AUTH0_CLIENT_ID = '%%AUTH0_CLIENT_ID%%';
+    
     window.addEventListener('load', function() {
+      // Vérifier si les valeurs injectées sont disponibles
+      if (AUTH0_DOMAIN.includes('%%') || AUTH0_CLIENT_ID.includes('%%')) {
+        document.querySelector('.loader').style.display = 'none';
+        document.getElementById('error-container').style.display = 'block';
+        document.getElementById('error-container').innerHTML = 
+          'Erreur de configuration: Les identifiants d\'authentification ne sont pas définis. ' + 
+          'Veuillez contacter l\'administrateur du site.';
+        return;
+      }
+      
       const webAuth = new auth0.WebAuth({
-        domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
-        clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
+        domain: AUTH0_DOMAIN,
+        clientID: AUTH0_CLIENT_ID,
         redirectUri: 'https://clean-eau-nantes.netlify.app/admin/callback'
       });
       
@@ -58,9 +81,11 @@
           // Rediriger vers l'interface d'administration
           window.location.href = '/admin/';
         } else if (err) {
+          document.querySelector('.loader').style.display = 'none';
+          document.getElementById('error-container').style.display = 'block';
+          document.getElementById('error-container').innerText = 
+            'Erreur d\'authentification: ' + (err.errorDescription || err.error || 'Une erreur s\'est produite');
           console.error('Erreur d\'authentification:', err);
-          alert('Une erreur s\'est produite lors de l\'authentification. Veuillez réessayer.');
-          window.location.href = '/admin/';
         }
       });
     });

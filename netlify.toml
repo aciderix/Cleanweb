@@ -39,3 +39,6 @@
 # Configurer le plugin de génération des événements
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
+
+[[plugins]]
+  package = "./netlify/build-plugins/inject-env"
