@@ -1,15 +1,9 @@
-# En développement local
+# Configuration production avec git-gateway
 backend:
-  name: proxy
-  proxy_url: http://localhost:8081/api
-  branch: main 
+  name: git-gateway
+  branch: main
 
-# En production, remplacez la configuration ci-dessus par celle-ci:
-# backend:
-#   name: git-gateway
-#   branch: main
-
-# Configuration des messages de commit
+# Messages de commit
 commit_messages:
   create: "Create {{collection}} '{{slug}}'"
   update: "Update {{collection}} '{{slug}}'"
@@ -17,37 +11,26 @@ commit_messages:
   uploadMedia: "Upload '{{path}}'"
   deleteMedia: "Delete '{{path}}'"
 
-# Activer l'éditeur éditorial
 publish_mode: editorial_workflow
-
-media_folder: "images/uploads" # Dossier où seront stockées les images téléchargées
-public_folder: "/images/uploads" # URL publique pour les images
-
-# Configuration pour l'API MongoDB personnalisée
-# local_backend:
-#   url: http://localhost:8081/api/v1
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
 
 collections:
   - name: "events"
     label: "Événements"
-    folder: "_events"  # Ce dossier est maintenant virtuel, on utilise MongoDB
+    folder: "_events"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - {label: "Titre", name: "title", widget: "string"}
-      - {label: "Date d'événement", name: "date", widget: "string", hint: "Exemple: Prochainement, À venir, 12 Juin 2025, etc."}
+      - {label: "Date d'événement", name: "date", widget: "string"}
       - {label: "Description", name: "description", widget: "text"}
       - {label: "Image", name: "image", widget: "image", required: false}
       - {label: "Lien", name: "link", widget: "string", default: "#contact"}
       - {label: "Texte du lien", name: "linkText", widget: "string", default: "Plus d'informations"}
       - {label: "Publication date", name: "publishDate", widget: "datetime"}
       - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1}
-    # Configuration pour utiliser notre API personnalisée
-    extension: "json"
-    format: "json"
-    editor:
-      preview: false
-    # Hooks personnalisés pour utiliser notre API MongoDB
+    # Hooks personnalisés pour MongoDB
     hooks:
       beforeSubmit: "window.mongodbBeforeSubmit"
       afterSubmit: "window.mongodbAfterSubmit" 

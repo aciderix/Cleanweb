@@ -43,14 +43,6 @@ exports.handler = async function(event, context) {
   // Désactiver la persistance de connexion pour les fonctions Netlify
   context.callbackWaitsForEmptyEventLoop = false;
   
-  // Vérifier la méthode HTTP
-  if (event.httpMethod !== 'PUT') {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ message: 'Méthode non autorisée' })
-    };
-  }
-  
   try {
     // Vérifier si les variables d'environnement sont définies
     if (!process.env.MONGODB_URI) {
@@ -71,23 +63,17 @@ exports.handler = async function(event, context) {
       throw new Error("ID d'événement non fourni");
     }
     
-    console.log(`Mise à jour de l'événement avec l'ID: ${id}`);
+    console.log(`Récupération de l'événement avec l'ID: ${id}`);
     
-    // Extraire les données de mise à jour de l'événement
-    const eventData = JSON.parse(event.body);
+    // Récupérer l'événement par ID
+    const foundEvent = await Event.findById(id).lean();
     
-    // Mettre à jour l'événement
-    const updatedEvent = await Event.findByIdAndUpdate(
-      id,
-      eventData,
-      { new: true, runValidators: true }
-    );
-    
-    if (!updatedEvent) {
+    if (!foundEvent) {
       return {
         statusCode: 404,
         headers: {
           'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
           'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify({
@@ -96,30 +82,29 @@ exports.handler = async function(event, context) {
       };
     }
     
-    console.log(`Événement mis à jour avec succès: ${updatedEvent.title}`);
+    console.log(`Événement récupéré: ${foundEvent.title}`);
     
     return {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({
-        message: 'Événement mis à jour avec succès',
-        event: updatedEvent
-      })
+      body: JSON.stringify(foundEvent)
     };
   } catch (error) {
-    console.error('Erreur lors de la mise à jour de l\'événement:', error);
+    console.error('Erreur lors de la récupération de l\'événement:', error);
     
     return {
       statusCode: 500,
       headers: {
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
-        message: 'Erreur lors de la mise à jour de l\'événement',
+        message: 'Erreur lors de la récupération de l\'événement',
         error: error.message
       })
     };

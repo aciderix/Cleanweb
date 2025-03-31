@@ -38,6 +38,15 @@
   from = "/api/events/*"
   to = "/.netlify/functions/get-events-mongodb"
   status = 200
+  force = true
+
+# Redirection pour récupérer un événement par ID
+[[redirects]]
+  from = "/api/events/:id"
+  to = "/.netlify/functions/get-event/:id"
+  status = 200
+  force = true
+  methods = ["GET"]
 
 # Redirection pour la création d'événements
 [[redirects]]

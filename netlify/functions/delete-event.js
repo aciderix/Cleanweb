@@ -1,5 +1,43 @@
-const connectDB = require('../../api/db/connection');
-const Event = require('../../api/models/Event');
+const mongoose = require('mongoose');
+require('dotenv').config();
+
+// Schéma d'événement directement intégré
+const eventSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  date: { type: String, required: true },
+  description: { type: String, required: true },
+  image: { type: String, required: false },
+  link: { type: String, default: '#contact' },
+  linkText: { type: String, default: "Plus d'informations" },
+  publishDate: { type: Date, default: Date.now },
+  order: { type: Number, default: 1 }
+}, { timestamps: true });
+
+// Modèle créé dynamiquement pour éviter les problèmes de cache
+const Event = mongoose.models.Event || mongoose.model('Event', eventSchema);
+
+// Connexion à MongoDB intégrée
+const connectDB = async () => {
+  try {
+    if (mongoose.connection.readyState >= 1) {
+      return true;
+    }
+    
+    console.log("Tentative de connexion à MongoDB...");
+    console.log("URI MongoDB (masqué): " + process.env.MONGODB_URI?.substring(0, 15) + "...");
+    
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    
+    console.log(`MongoDB connecté: ${mongoose.connection.host}`);
+    return true;
+  } catch (error) {
+    console.error(`Erreur de connexion à MongoDB: ${error.message}`);
+    return false;
+  }
+};
 
 exports.handler = async function(event, context) {
   // Désactiver la persistance de connexion pour les fonctions Netlify
@@ -14,6 +52,11 @@ exports.handler = async function(event, context) {
   }
   
   try {
+    // Vérifier si les variables d'environnement sont définies
+    if (!process.env.MONGODB_URI) {
+      throw new Error("Variable d'environnement MONGODB_URI non définie");
+    }
+    
     // Connexion à MongoDB
     const connected = await connectDB();
     
@@ -27,6 +70,8 @@ exports.handler = async function(event, context) {
     if (!id) {
       throw new Error("ID d'événement non fourni");
     }
+    
+    console.log(`Suppression de l'événement avec l'ID: ${id}`);
     
     // Supprimer l'événement
     const deletedEvent = await Event.findByIdAndDelete(id);
@@ -44,7 +89,7 @@ exports.handler = async function(event, context) {
       };
     }
     
-    console.log(`Événement supprimé avec l'ID: ${id}`);
+    console.log(`Événement supprimé avec succès: ${deletedEvent.title}`);
     
     return {
       statusCode: 200,
