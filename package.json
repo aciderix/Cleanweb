@@ -1,31 +1,25 @@
 {
-  "name": "clean-site",
+  "name": "clean-eau-nantes",
   "version": "1.0.0",
-  "description": "Site web de l'association CLEAN",
+  "description": "Site web de l'association C.L.E.A.N. - Conservation de l'Eau À Nantes",
   "main": "index.js",
   "scripts": {
-    "dev": "npx netlify-cms-proxy-server",
-    "build": "node netlify/functions/regenerate-events.js",
-    "generate-events": "node netlify/functions/regenerate-events.js",
-    "migrate-to-mongodb": "node scripts/migrate-to-mongodb.js",
-    "start": "netlify dev",
-    "start:mongodb": "node api/mongodb-backend.js"
+    "dev": "netlify dev",
+    "build": "node api/regenerate-events.js"
   },
+  "keywords": [
+    "clean",
+    "eau",
+    "nantes",
+    "association",
+    "environnement"
+  ],
+  "author": "C.L.E.A.N.",
+  "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.20.3",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.21.2",
+    "dotenv": "^16.4.7",
     "gray-matter": "^4.0.3",
-    "marked": "^4.3.0",
-    "mongodb": "^5.8.0",
-    "mongoose": "^7.5.0",
-    "netlify-cms-app": "^2.15.72",
-    "netlify-identity-widget": "^1.9.2",
-    "node-fetch": "^2.6.7"
-  },
-  "devDependencies": {
-    "http-server": "^14.1.1",
-    "netlify-cli": "^15.0.0"
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^5.9.2"
   }
 }

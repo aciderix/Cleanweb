@@ -1,24 +1,14 @@
+# Configuration Netlify pour C.L.E.A.N.
+
 [build]
+  publish = "."
   command = "npm run build"
-  publish = "./"
-  functions = "netlify/functions"
+  functions = "api"
 
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-
-[build.environment]
-  NODE_VERSION = "16"
-
-# Permettre l'exécution de fonctions après chaque déploiement
-[build.processing]
-  skip_processing = false
-
-# Redirection pour l'interface admin
-[[redirects]]
-  from = "/admin/*"
-  to = "/admin/:splat"
-  status = 200
+[dev]
+  publish = "."
+  functions = "api"
+  port = 8888
 
 # Redirection pour les fonctions API
 [[redirects]]
@@ -26,65 +16,52 @@
   to = "/.netlify/functions/:splat"
   status = 200
 
-# Redirection pour la récupération des événements (ancienne méthode)
+# Redirection spécifique pour la récupération des événements
 [[redirects]]
-  from = "/get-events"
+  from = "/api/get-events"
   to = "/.netlify/functions/get-events"
   status = 200
-  force = true
 
-# Redirection pour l'API des événements MongoDB
+# Redirection spécifique pour l'API MongoDB
 [[redirects]]
-  from = "/api/events/*"
-  to = "/.netlify/functions/get-events-mongodb"
+  from = "/api/mongodb-events"
+  to = "/.netlify/functions/mongodb-events"
   status = 200
-  force = true
 
-# Redirection pour récupérer un événement par ID
+# Redirection pour la migration vers MongoDB
 [[redirects]]
-  from = "/api/events/:id"
-  to = "/.netlify/functions/get-event/:id"
+  from = "/api/migrate-to-mongodb"
+  to = "/.netlify/functions/migrate-to-mongodb"
   status = 200
-  force = true
-  methods = ["GET"]
 
-# Redirection pour la création d'événements
+# Redirection pour la régénération des événements
 [[redirects]]
-  from = "/api/events"
-  to = "/.netlify/functions/create-event"
+  from = "/api/regenerate-events"
+  to = "/.netlify/functions/regenerate-events"
   status = 200
-  force = true
-  methods = ["POST"]
 
-# Redirection pour la mise à jour d'événements
-[[redirects]]
-  from = "/api/events/:id"
-  to = "/.netlify/functions/update-event/:id"
-  status = 200
-  force = true
-  methods = ["PUT"]
+# Variables d'environnement pour les fonctions serverless
+[build.environment]
+  NODE_VERSION = "16"
 
-# Redirection pour la suppression d'événements
-[[redirects]]
-  from = "/api/events/:id"
-  to = "/.netlify/functions/delete-event/:id"
-  status = 200
-  force = true
-  methods = ["DELETE"]
+# Les variables sensibles (MONGODB_URI, JWT_SECRET) sont définies dans l'interface Netlify
+# Ne pas les stocker dans ce fichier pour des raisons de sécurité
 
-# Headers pour autoriser les requêtes cross-origin
+# Configuration pour les headers de sécurité
 [[headers]]
   for = "/*"
-    [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-    Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' https://unpkg.com 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.netlify.com;"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
 
-# Variables d'environnement pour le développement
-[dev]
-  framework = "#custom"
-  command = "npm start"
-  targetPort = 8888
-  port = 8888
-  publish = "."
-  autoLaunch = true
+# Permettre l'exécution de fonctions après chaque déploiement
+[build.processing]
+  skip_processing = false
+
+# Configurer le plugin de génération des événements
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"

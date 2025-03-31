@@ -1,32 +1,29 @@
 [
   {
-    "id": "static-1",
-    "title": "Collectes sur l'Erdre",
-    "date": "Tous les mois",
-    "description": "Rejoignez-nous pour une collecte de déchets le long de l'Erdre. Cette action permettra de nettoyer les berges et de sensibiliser le public à la pollution des cours d'eau.",
-    "image": null,
+    "title": "Première Éco-Navigation avec La Toue",
+    "date": "Prochainement",
+    "description": "Venez découvrir notre nouvelle formule de nettoyage de l'Erdre à bord de La Toue. Une expérience unique alliant action écologique et découverte du patrimoine fluvial.",
+    "image": "/images/uploads/bateau.png",
     "link": "#contact",
-    "linkText": "S'inscrire",
+    "linkText": "Se tenir informé",
     "order": 1
   },
   {
-    "id": "static-2",
-    "title": "Rendez-vous sur l'Erdre",
-    "date": "Août 2025",
-    "description": "Retrouvez-nous pendant le festival des Rendez-vous de l'Erdre pour des animations de sensibilisation et des démonstrations de notre travail de collecte.",
-    "image": null,
+    "title": "Rendez-vous de l'Erdre",
+    "date": "À venir",
+    "description": "Retrouvez-nous lors des Rendez-vous de l'Erdre pour échanger sur nos actions et découvrir comment participer à la préservation de nos rivières.",
+    "image": "/images/uploads/sensibilisation.jpg",
     "link": "#contact",
-    "linkText": "En savoir plus",
+    "linkText": "Plus d'informations",
     "order": 2
   },
   {
-    "id": "static-3",
-    "title": "Formation Bacs à Déchets",
-    "date": "Prochainement",
-    "description": "Formation à l'utilisation et l'entretien des bacs à déchets flottants. Venez découvrir comment ces dispositifs innovants contribuent à la préservation de nos rivières.",
-    "image": null,
+    "title": "Collectes sur l'Erdre",
+    "date": "En continu",
+    "description": "Nos actions de collecte se poursuivent régulièrement sur l'Erdre. Contactez-nous pour connaître les prochaines dates et rejoindre notre équipe de bénévoles.",
+    "image": "/images/uploads/bac.jpg",
     "link": "#contact",
-    "linkText": "S'inscrire",
+    "linkText": "Nous contacter",
     "order": 3
   }
 ] 

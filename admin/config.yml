@@ -1,9 +1,12 @@
-# Configuration production avec git-gateway
+# Configuration pour utiliser notre API MongoDB au lieu des fichiers Markdown
 backend:
-  name: git-gateway
+  name: github
+  repo: aciderix/Cleanweb
   branch: main
+  client_id: Ov23lixJWesYNuUHu8hP
+  base_url: https://api.netlify.com
 
-# Messages de commit
+# Configuration des messages de commit
 commit_messages:
   create: "Create {{collection}} '{{slug}}'"
   update: "Update {{collection}} '{{slug}}'"
@@ -11,26 +14,40 @@ commit_messages:
   uploadMedia: "Upload '{{path}}'"
   deleteMedia: "Delete '{{path}}'"
 
-publish_mode: editorial_workflow
-media_folder: "images/uploads"
-public_folder: "/images/uploads"
+# Pour le développement local, vous pouvez décommenter la ligne ci-dessous
+# et commenter les lignes ci-dessus
+# backend:
+#   name: test-repo
 
+# Activer l'éditeur éditorial
+publish_mode: editorial_workflow
+
+media_folder: "images/uploads" # Dossier où seront stockées les images téléchargées
+public_folder: "/images/uploads" # URL publique pour les images
+
+# Configuration MongoDB via notre API personnalisée
 collections:
   - name: "events"
     label: "Événements"
-    folder: "_events"
+    folder: "_events"  # Conserver pour compatibilité
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    # Utiliser notre API MongoDB personnalisée
+    extension: json
+    format: json
+    editor:
+      preview: false
+    # Hook pour intercepter les opérations et utiliser notre API au lieu des fichiers
+    hook:
+      - create: /api/mongodb-events
+      - update: /api/mongodb-events
+      - delete: /api/mongodb-events
     fields:
       - {label: "Titre", name: "title", widget: "string"}
-      - {label: "Date d'événement", name: "date", widget: "string"}
+      - {label: "Date d'événement", name: "date", widget: "string", hint: "Exemple: Prochainement, À venir, 12 Juin 2025, etc."}
       - {label: "Description", name: "description", widget: "text"}
       - {label: "Image", name: "image", widget: "image", required: false}
       - {label: "Lien", name: "link", widget: "string", default: "#contact"}
       - {label: "Texte du lien", name: "linkText", widget: "string", default: "Plus d'informations"}
       - {label: "Publication date", name: "publishDate", widget: "datetime"}
-      - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1}
-    # Hooks personnalisés pour MongoDB
-    hooks:
-      beforeSubmit: "window.mongodbBeforeSubmit"
-      afterSubmit: "window.mongodbAfterSubmit" 
+      - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1} 
