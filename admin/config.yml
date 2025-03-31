@@ -29,20 +29,16 @@ public_folder: "/images/uploads" # URL publique pour les images
 collections:
   - name: "events"
     label: "Événements"
-    folder: "_events"  # Conserver pour compatibilité
+    folder: "_events"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     identifier_field: "title"
-    # Utiliser notre API MongoDB personnalisée
-    extension: json
-    format: json
     editor:
       preview: false
-    # Hook pour intercepter les opérations et utiliser notre API au lieu des fichiers
     hook:
-      - create: /api/mongodb-events
-      - update: /api/mongodb-events
-      - delete: /api/mongodb-events
+      - create: /.netlify/functions/mongodb-events
+      - update: /.netlify/functions/mongodb-events
+      - delete: /.netlify/functions/mongodb-events
     fields:
       - {label: "Titre", name: "title", widget: "string"}
       - {label: "Date d'événement", name: "date", widget: "string", hint: "Exemple: Prochainement, À venir, 12 Juin 2025, etc."}

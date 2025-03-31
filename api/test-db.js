@@ -1,3 +1,8 @@
+const { createMongoClient } = require('./auth');
+
+// Constantes pour MongoDB
+const DB_NAME = 'Clean';
+
 exports.handler = async function(event, context) {
   console.log('Fonction test-db déclenchée');
   
@@ -24,7 +29,7 @@ exports.handler = async function(event, context) {
     console.error('Erreur détaillée:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message })
+      body: JSON.stringify({ error: error.message, stack: error.stack })
     };
   } finally {
     if (client) await client.close();
