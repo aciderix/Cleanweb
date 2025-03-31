@@ -1,10 +1,13 @@
-# En production, utilisez le backend GitHub avec Auth0
+# En développement local
 backend:
-  name: github
-  repo: aciderix/Cleanweb
-  branch: main
-  client_id: Ov23lixJWesYNuUHu8hP
-  base_url: https://api.netlify.com
+  name: proxy
+  proxy_url: http://localhost:8081/api
+  branch: main 
+
+# En production, remplacez la configuration ci-dessus par celle-ci:
+# backend:
+#   name: git-gateway
+#   branch: main
 
 # Configuration des messages de commit
 commit_messages:
@@ -13,11 +16,6 @@ commit_messages:
   delete: "Delete {{collection}} '{{slug}}'"
   uploadMedia: "Upload '{{path}}'"
   deleteMedia: "Delete '{{path}}'"
-
-# Pour le développement local, vous pouvez décommenter la ligne ci-dessous
-# et commenter les lignes ci-dessus
-# backend:
-#   name: test-repo
 
 # Activer l'éditeur éditorial
 publish_mode: editorial_workflow

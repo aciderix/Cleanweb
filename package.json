@@ -8,17 +8,21 @@
     "build": "node netlify/functions/regenerate-events.js && mkdir -p _events_copy && cp -r _events/* _events_copy/ && ls -la _events_copy",
     "generate-events": "node netlify/functions/regenerate-events.js",
     "migrate-to-mongodb": "node scripts/migrate-to-mongodb.js",
-    "start": "netlify dev"
+    "start": "netlify dev",
+    "start:mongodb": "node api/mongodb-backend.js"
   },
   "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.21.2",
     "gray-matter": "^4.0.3",
     "marked": "^4.3.0",
-    "node-fetch": "^2.6.7",
+    "mongodb": "^5.8.0",
+    "mongoose": "^7.5.0",
     "netlify-cms-app": "^2.15.72",
     "netlify-identity-widget": "^1.9.2",
-    "mongoose": "^7.5.0",
-    "mongodb": "^5.8.0",
-    "dotenv": "^16.3.1"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "http-server": "^14.1.1"

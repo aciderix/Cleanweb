@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = "."
+  publish = "./"
   functions = "netlify/functions"
 
 [functions]
@@ -32,4 +32,51 @@
 
 # Configurer le plugin de génération des événements
 [[plugins]]
-  package = "@netlify/plugin-functions-install-core"
+  package = "@netlify/plugin-functions-core"
+
+# Redirection pour l'API des événements
+[[redirects]]
+  from = "/api/events/*"
+  to = "/.netlify/functions/get-events-mongodb"
+  status = 200
+
+# Redirection pour la création d'événements
+[[redirects]]
+  from = "/api/events"
+  to = "/.netlify/functions/create-event"
+  status = 200
+  force = true
+  methods = ["POST"]
+
+# Redirection pour la mise à jour d'événements
+[[redirects]]
+  from = "/api/events/:id"
+  to = "/.netlify/functions/update-event/:id"
+  status = 200
+  force = true
+  methods = ["PUT"]
+
+# Redirection pour la suppression d'événements
+[[redirects]]
+  from = "/api/events/:id"
+  to = "/.netlify/functions/delete-event/:id"
+  status = 200
+  force = true
+  methods = ["DELETE"]
+
+# Headers pour autoriser les requêtes cross-origin
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept"
+
+# Variables d'environnement pour le développement
+[dev]
+  framework = "#custom"
+  command = "npm start"
+  targetPort = 8888
+  port = 8888
+  publish = "."
+  autoLaunch = true
