@@ -7,7 +7,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 const { checkAuth, createMongoClient } = require('./auth');
 
 // Constantes pour MongoDB
-const DB_NAME = 'clean';
+const DB_NAME = 'Clean';
 const COLLECTION_NAME = 'events';
 
 exports.handler = async function(event, context) {

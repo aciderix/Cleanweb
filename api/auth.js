@@ -5,7 +5,7 @@ const { MongoClient } = require('mongodb');
 // Récupération des variables d'environnement
 const JWT_SECRET = process.env.JWT_SECRET;
 const MONGODB_URI = process.env.MONGODB_URI;
-const DB_NAME = 'clean';
+const DB_NAME = 'Clean';
 
 // Fonction pour vérifier le token JWT
 const verifyToken = (token) => {
