@@ -25,13 +25,14 @@ publish_mode: editorial_workflow
 media_folder: "images/uploads" # Dossier où seront stockées les images téléchargées
 public_folder: "/images/uploads" # URL publique pour les images
 
-# La méthode la plus simple : Ne pas utiliser de webhook, car GitHub Actions
-# va automatiquement s'exécuter quand un fichier dans _events est modifié
+# Configuration pour l'API MongoDB personnalisée
+local_backend:
+  url: http://localhost:8081/api/v1
 
 collections:
   - name: "events"
     label: "Événements"
-    folder: "_events"
+    folder: "_events"  # Ce dossier est maintenant virtuel, on utilise MongoDB
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
@@ -42,4 +43,13 @@ collections:
       - {label: "Lien", name: "link", widget: "string", default: "#contact"}
       - {label: "Texte du lien", name: "linkText", widget: "string", default: "Plus d'informations"}
       - {label: "Publication date", name: "publishDate", widget: "datetime"}
-      - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1} 
+      - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1}
+    # Configuration pour utiliser notre API personnalisée
+    extension: "json"
+    format: "json"
+    editor:
+      preview: false
+    # Hooks personnalisés pour utiliser notre API MongoDB
+    hooks:
+      beforeSubmit: "window.mongodbBeforeSubmit"
+      afterSubmit: "window.mongodbAfterSubmit" 
