@@ -23,14 +23,8 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/get-partners"
-  to = "/.netlify/functions/get-partners"
-  status = 200
-  force = true
-
 [build.environment]
-  NODE_VERSION = "18.18.0"
+  NODE_VERSION = "16"
 
 # Permettre l'exécution de fonctions après chaque déploiement
 [build.processing]
@@ -39,11 +33,3 @@
 # Configurer le plugin de génération des événements
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
-
-# Ajouter des headers de sécurité avec une CSP plus permissive
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' https://cdn.auth0.com https://unpkg.com https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://unpkg.com https://cdnjs.cloudflare.com 'unsafe-inline'; img-src 'self' data: blob: https://*; connect-src 'self' blob: https://api.github.com https://api.netlify.com https://*; frame-src 'self' https://*; font-src 'self' https://cdnjs.cloudflare.com data:;"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"

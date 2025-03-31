@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Administration C.L.E.A.N.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Retrait de la feuille de style externe pour éviter les problèmes CSP -->
+  <link href="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.css" rel="stylesheet" type="text/css" />
   <style>
     .header {
       background-color: #1a7ba3;
@@ -32,15 +32,6 @@
     .nc-githubAuthenticationPage-buttonIcon {
       margin-right: 5px;
     }
-    .loader {
-      display: flex;
-      justify-content: center;
-      margin: 30px 0;
-    }
-    .loader-text {
-      text-align: center;
-      font-family: Arial, sans-serif;
-    }
   </style>
 </head>
 <body>
@@ -52,66 +43,46 @@
     <p>Vous allez être redirigé vers GitHub pour vous authentifier. Une fois connecté, vous pourrez gérer les événements du site.</p>
   </div>
   
-  <div id="nc-root">
-    <div class="loader">
-      <p class="loader-text">Chargement de l'interface d'administration...</p>
-    </div>
-  </div>
-  
   <!-- Chargement du script Netlify CMS -->
   <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
   
   <script>
-    // Attendre que NetlifyCMS soit chargé
-    document.addEventListener('DOMContentLoaded', function() {
-      // Vérifier si NetlifyCMS est disponible
-      if (typeof window.CMS !== 'undefined') {
-        console.log('Utilisation de window.CMS');
-        configureNetlifyCSM(window.CMS);
-      } else if (typeof window.NetlifyCMS !== 'undefined') {
-        console.log('Utilisation de window.NetlifyCMS');
-        const { CMS, initCMS } = window.NetlifyCMS;
-        configureNetlifyCSM(CMS);
-        initCMS();
-      } else {
-        console.error('Netlify CMS n\'a pas pu être chargé correctement');
-        document.querySelector('.loader-text').textContent = 
-          'Erreur lors du chargement de l\'interface. Veuillez actualiser la page.';
-      }
+    // Configuration pour l'authentification GitHub
+    const { CMS, initCMS: init } = window.NetlifyCMS;
+    
+    // Configuration des hooks pour mise à jour automatique
+    CMS.registerEventListener({
+      name: 'preSave',
+      handler: async ({ entry }) => {
+        console.log('Sauvegarde en cours...', entry);
+        return entry;
+      },
     });
     
-    function configureNetlifyCSM(CMS) {
-      // Configuration des hooks pour mise à jour automatique
-      CMS.registerEventListener({
-        name: 'preSave',
-        handler: async ({ entry }) => {
-          console.log('Sauvegarde en cours...', entry);
-          return entry;
-        },
-      });
-      
-      CMS.registerEventListener({
-        name: 'postPublish',
-        handler: async ({ entry }) => {
-          console.log('Publication effectuée, attendez la fin du déploiement...');
+    CMS.registerEventListener({
+      name: 'postPublish',
+      handler: async ({ entry }) => {
+        console.log('Publication effectuée, attendez la fin du déploiement...');
+        try {
+          // Notifier l'utilisateur que les changements seront visibles après le déploiement
+          alert('Votre modification a été enregistrée ! Les changements seront visibles sur le site après le déploiement complet (environ 1-2 minutes). Vous devrez peut-être actualiser la page d\'accueil pour voir les changements.');
+          
+          // Essayer d'appeler la fonction si disponible
           try {
-            // Notifier l'utilisateur que les changements seront visibles après le déploiement
-            alert('Votre modification a été enregistrée ! Les changements seront visibles sur le site après le déploiement complet (environ 1-2 minutes). Vous devrez peut-être actualiser la page d\'accueil pour voir les changements.');
-            
-            // Essayer d'appeler la fonction si disponible
-            try {
-              const response = await fetch('/.netlify/functions/generate-events');
-              const data = await response.json();
-              console.log('Mise à jour des événements terminée:', data);
-            } catch (e) {
-              console.log('La fonction de génération sera exécutée lors du déploiement');
-            }
-          } catch (error) {
-            console.error('Erreur lors de la mise à jour:', error);
+            const response = await fetch('/.netlify/functions/generate-events');
+            const data = await response.json();
+            console.log('Mise à jour des événements terminée:', data);
+          } catch (e) {
+            console.log('La fonction de génération sera exécutée lors du déploiement');
           }
-        },
-      });
-    }
+        } catch (error) {
+          console.error('Erreur lors de la mise à jour:', error);
+        }
+      },
+    });
+    
+    // Initialisation du CMS
+    init();
   </script>
 </body>
 </html> 

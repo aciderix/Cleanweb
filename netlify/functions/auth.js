@@ -11,31 +11,11 @@ exports.handler = async (event, context) => {
     
     const redirectUrl = 'https://clean-eau-nantes.netlify.app/admin/callback';
     
-    // Récupération des identifiants Auth0 depuis les variables d'environnement
-    const auth0Domain = process.env.AUTH0_DOMAIN;
-    const auth0ClientID = process.env.AUTH0_CLIENT_ID;
-    
-    // Vérifier que les variables d'environnement sont définies
-    if (!auth0Domain || !auth0ClientID) {
-      console.error('Variables d\'environnement AUTH0_DOMAIN ou AUTH0_CLIENT_ID non définies');
-      return {
-        statusCode: 500,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-          error: 'Configuration incorrecte', 
-          message: 'Les paramètres d\'authentification ne sont pas configurés'
-        })
-      };
-    }
-    
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': 'text/html; charset=UTF-8',
-        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
-        'X-Content-Type-Options': 'nosniff'
+        'Content-Type': 'text/html',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0'
       },
       body: `
         <!DOCTYPE html>
@@ -73,8 +53,8 @@ exports.handler = async (event, context) => {
           <script>
             window.addEventListener('load', function() {
               const webAuth = new auth0.WebAuth({
-                domain: '${auth0Domain}',
-                clientID: '${auth0ClientID}',
+                domain: 'dev-x3odl65g8c07cjf5.us.auth0.com',
+                clientID: 'fHdNXEZgsI166aHZfFu6GcDNtCzZoefC',
                 redirectUri: '${redirectUrl}',
                 responseType: 'token id_token',
                 scope: 'openid profile email'
