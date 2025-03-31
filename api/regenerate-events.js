@@ -1,59 +1,56 @@
 /**
- * Fonction Netlify pour synchroniser les événements avec MongoDB
+ * Fonction Netlify pour régénérer le fichier events.json à partir des fichiers markdown dans _events
  * Cette fonction est déclenchée après chaque modification dans Netlify CMS
  */
 
-const { MongoClient, ObjectId } = require('mongodb');
+const fs = require('fs');
 const path = require('path');
-
-// URI de connexion MongoDB (à récupérer depuis les variables d'environnement)
-const MONGODB_URI = process.env.MONGODB_URI;
-const DB_NAME = 'Clean';
-const COLLECTION_NAME = 'events';
+const matter = require('gray-matter');
 
 exports.handler = async function(event, context) {
-  console.log('Fonction synchroniser-mongodb déclenchée');
+  // Vérifier si c'est un appel webhook de Netlify CMS
+  console.log('Fonction regenerate-events déclenchée');
   console.log('Méthode HTTP:', event.httpMethod);
   console.log('Chemin:', event.path);
 
-  // Vérifier si l'URI MongoDB est définie
-  if (!MONGODB_URI) {
-    console.error('Erreur: Variable d\'environnement MONGODB_URI non définie');
-    return {
-      statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ 
-        error: 'Configuration MongoDB manquante'
-      })
-    };
-  }
-
-  let client;
   try {
-    // Se connecter à MongoDB
-    client = new MongoClient(MONGODB_URI);
-    await client.connect();
-    console.log('Connexion à MongoDB établie');
+    // Lire tous les fichiers du dossier _events
+    const eventsDir = path.join(__dirname, '..', '_events');
+    const files = fs.readdirSync(eventsDir);
     
-    const db = client.db(DB_NAME);
-    const collection = db.collection(COLLECTION_NAME);
+    // Traiter chaque fichier Markdown
+    const events = files
+      .filter(filename => filename.endsWith('.md'))
+      .map(filename => {
+        const filePath = path.join(eventsDir, filename);
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        const { data } = matter(fileContent);
+        
+        return {
+          title: data.title,
+          date: data.date,
+          description: data.description,
+          image: data.image,
+          link: data.link || '#contact',
+          linkText: data.linkText || "Plus d'informations",
+          order: data.order || 999,
+          publishDate: data.publishDate
+        };
+      });
     
-    // Récupérer tous les événements de la base de données
-    const events = await collection.find({}).sort({ order: 1 }).toArray();
-    console.log(`${events.length} événements récupérés de MongoDB`);
+    // Trier les événements par ordre
+    events.sort((a, b) => a.order - b.order);
     
-    // Générer également un fichier JSON local pour compatibilité avec le code existant
-    // et pour servir de cache si MongoDB n'est pas accessible
-    const fs = require('fs');
+    // Créer le répertoire api s'il n'existe pas
     const apiDir = path.join(__dirname, '..');
+    if (!fs.existsSync(apiDir)) {
+      fs.mkdirSync(apiDir, { recursive: true });
+    }
+    
+    // Écrire le fichier JSON
     fs.writeFileSync(
       path.join(apiDir, 'events.json'),
-      JSON.stringify(events.map(event => ({
-        ...event,
-        _id: event._id.toString() // Convertir ObjectId en string pour JSON
-      })), null, 2)
+      JSON.stringify(events, null, 2)
     );
     
     console.log('Fichier events.json généré avec succès');
@@ -63,7 +60,7 @@ exports.handler = async function(event, context) {
     
     // Ajouter un code JavaScript pour forcer le rechargement de la page d'accueil
     fs.writeFileSync(
-      path.join(__dirname, '../..', 'refresh.js'),
+      path.join(__dirname, '..', 'refresh.js'),
       `// Timestamp: ${timestamp}
 // Ce fichier est généré automatiquement pour forcer le rechargement des événements
 console.log("Événements mis à jour le ${new Date().toLocaleString()}");`
@@ -78,12 +75,12 @@ console.log("Événements mis à jour le ${new Date().toLocaleString()}");`
       body: JSON.stringify({ 
         success: true,
         timestamp: timestamp,
-        message: 'Événements synchronisés avec succès',
+        message: 'Événements générés avec succès',
         count: events.length
       })
     };
   } catch (error) {
-    console.error('Erreur lors de la synchronisation avec MongoDB:', error);
+    console.error('Erreur:', error);
     return {
       statusCode: 500,
       headers: {
@@ -94,11 +91,5 @@ console.log("Événements mis à jour le ${new Date().toLocaleString()}");`
         stack: error.stack
       })
     };
-  } finally {
-    // Fermer la connexion à MongoDB
-    if (client) {
-      await client.close();
-      console.log('Connexion à MongoDB fermée');
-    }
   }
 }; 

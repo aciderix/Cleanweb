@@ -1,4 +1,4 @@
-# Configuration pour utiliser notre API MongoDB au lieu des fichiers Markdown
+# En production, utilisez le backend GitHub avec Auth0
 backend:
   name: github
   repo: aciderix/Cleanweb
@@ -25,20 +25,15 @@ publish_mode: editorial_workflow
 media_folder: "images/uploads" # Dossier où seront stockées les images téléchargées
 public_folder: "/images/uploads" # URL publique pour les images
 
-# Configuration MongoDB via notre API personnalisée
+# La méthode la plus simple : Ne pas utiliser de webhook, car GitHub Actions
+# va automatiquement s'exécuter quand un fichier dans _events est modifié
+
 collections:
   - name: "events"
     label: "Événements"
     folder: "_events"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    identifier_field: "title"
-    editor:
-      preview: false
-    hook:
-      - create: /.netlify/functions/mongodb-events
-      - update: /.netlify/functions/mongodb-events
-      - delete: /.netlify/functions/mongodb-events
     fields:
       - {label: "Titre", name: "title", widget: "string"}
       - {label: "Date d'événement", name: "date", widget: "string", hint: "Exemple: Prochainement, À venir, 12 Juin 2025, etc."}

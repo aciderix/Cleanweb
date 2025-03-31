@@ -1,69 +1,30 @@
-# Configuration Netlify pour C.L.E.A.N.
-
 [build]
-  publish = "."
   command = "npm run build"
-  functions = "api"
-
-[dev]
   publish = "."
-  functions = "api"
-  port = 8888
+  functions = "netlify/functions"
 
-# Redirection pour les fonctions API
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  status = 200
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
-# Redirection spécifique pour la récupération des événements
 [[redirects]]
-  from = "/api/get-events"
+  from = "/get-events"
   to = "/.netlify/functions/get-events"
-  status = 200
-
-# Redirection spécifique pour l'API MongoDB
-[[redirects]]
-  from = "/api/mongodb-events"
-  to = "/.netlify/functions/mongodb-events"
-  status = 200
-
-# Redirection pour la migration vers MongoDB
-[[redirects]]
-  from = "/api/migrate-to-mongodb"
-  to = "/.netlify/functions/migrate-to-mongodb"
-  status = 200
-
-# Redirection pour la régénération des événements
-[[redirects]]
-  from = "/api/regenerate-events"
-  to = "/.netlify/functions/regenerate-events"
-  status = 200
-
-# Redirection pour tester la connexion à MongoDB
-[[redirects]]
-  from = "/test-db"
-  to = "/.netlify/functions/test-db"
   status = 200
   force = true
 
-# Variables d'environnement pour les fonctions serverless
 [build.environment]
   NODE_VERSION = "16"
-
-# Les variables sensibles (MONGODB_URI, JWT_SECRET) sont définies dans l'interface Netlify
-# Ne pas les stocker dans ce fichier pour des raisons de sécurité
-
-# Configuration pour les headers de sécurité
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' https://unpkg.com https://cdnjs.cloudflare.com 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.netlify.com https://api.github.com; frame-src *;"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
 
 # Permettre l'exécution de fonctions après chaque déploiement
 [build.processing]

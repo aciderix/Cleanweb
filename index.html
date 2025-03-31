@@ -367,16 +367,8 @@
     </footer>
 
     <script src="script.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Ajouter un timestamp pour éviter la mise en cache
-        const timestamp = new Date().getTime();
-        
-        // Remplacer la référence directe à events.js
-        const eventsScript = document.createElement('script');
-        eventsScript.src = `events.js?t=${timestamp}`;
-        document.body.appendChild(eventsScript);
-      });
-    </script>
+    <script src="events-markdown.js"></script>
+    <!-- Le script refresh.js est généré automatiquement après chaque mise à jour des événements -->
+    <script src="refresh.js"></script>
 </body>
 </html>

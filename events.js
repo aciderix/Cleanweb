@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   try {
     // Ajouter un paramètre timestamp pour éviter la mise en cache
     const timestamp = new Date().getTime();
-    const response = await fetch(`/.netlify/functions/get-events?t=${timestamp}`);
+    const response = await fetch(`/api/events.json?t=${timestamp}`);
     
     if (!response.ok) {
       throw new Error('Erreur lors du chargement des événements');
@@ -23,13 +23,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
     
-    // Les événements sont déjà triés par ordre depuis l'API
+    // Trier les événements par ordre
+    events.sort((a, b) => a.order - b.order);
     
     // Ajouter chaque événement au conteneur
     events.forEach(event => {
       const eventCard = document.createElement('div');
       eventCard.className = 'event-card hidden';
-      eventCard.dataset.id = event._id; // Ajouter l'ID MongoDB pour référence
       
       let imageHtml = '';
       if (event.image) {
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     
     // Afficher un message de débogage dans la console
-    console.log(`${events.length} événements chargés à ${new Date().toLocaleTimeString()} depuis MongoDB`);
+    console.log(`${events.length} événements chargés à ${new Date().toLocaleTimeString()}`);
     
     // Réinitialiser l'observateur pour les nouveaux éléments
     const observer = new IntersectionObserver((entries) => {
