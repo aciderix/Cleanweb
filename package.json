@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx netlify-cms-proxy-server",
-    "build": "node netlify/functions/regenerate-events.js",
+    "build": "node netlify/functions/regenerate-events.js && mkdir -p _events_copy && cp _events/*.md _events_copy/ || true",
     "generate-events": "node netlify/functions/regenerate-events.js"
   },
   "dependencies": {
