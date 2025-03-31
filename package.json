@@ -11,11 +11,11 @@
   "dependencies": {
     "gray-matter": "^4.0.3",
     "marked": "^4.3.0",
-    "node-fetch": "^2.6.7",
     "netlify-cms-app": "^2.15.72",
-    "netlify-identity-widget": "^1.9.2"
+    "netlify-identity-widget": "^1.9.2",
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "http-server": "^14.1.1"
   }
-} 
+}

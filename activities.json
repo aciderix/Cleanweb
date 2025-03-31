@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Projet BADS - Bacs à Déchets Sauvages",
+    "description": "Nous déployons un réseau de <span class=\"highlight-blue\">Bacs à Déchets Sauvages (BADS)</span> sur les rivières de Nantes Métropole, en commençant par l'Erdre. Ces bacs, installés à des points stratégiques, permettent aux plaisanciers, sportifs nautiques et riverains de participer activement à la collecte des déchets flottants. <span class=\"highlight-blue\">Rejoignez le mouvement BADS et devenez acteur de la propreté de nos rivières !</span>",
+    "image": "bac.jpg",
+    "link": "#contact",
+    "linkText": "Participer au projet BADS",
+    "order": 1
+  },
+  {
+    "title": "Éco-Navigations : Nettoyons en Explorant",
+    "description": "Vivez une expérience unique avec nos <span class=\"highlight-blue\">Éco-Navigations</span> ! Ces sorties en bateau, canoë ou paddle combinent découverte du patrimoine naturel et culturel de nos rivières et actions de nettoyage. <span class=\"highlight-blue\">Explorez l'Erdre, la Loire et leurs affluents tout en contribuant concrètement à leur dépollution.</span> Une manière conviviale et originale de s'engager pour l'environnement.",
+    "image": "bateau.png",
+    "link": "#contact",
+    "linkText": "S'inscrire à une Éco-Navigation",
+    "order": 2
+  },
+  {
+    "title": "Sensibilisation : Partager et Échanger",
+    "description": "Lors d'événements comme les <span class=\"highlight-blue\">Rendez-vous de l'Erdre</span>, nous allons à la rencontre du public pour échanger sur l'état de nos rivières. Notre approche se veut simple et accessible : nous partageons nos observations de terrain et montrons comment chacun peut, s'il le souhaite, participer à la préservation de nos cours d'eau.",
+    "image": "sensibilisation.jpg",
+    "link": "#contact",
+    "linkText": "Nous rencontrer",
+    "order": 3
+  },
+  {
+    "title": "Collaboration avec les Acteurs Locaux",
+    "description": "Nous souhaitons travailler avec l'ensemble des acteurs engagés dans la protection des rivières nantaises. <span class=\"highlight-blue\">Notre rôle est de participer à la réflexion collective</span> et d'apporter notre expérience de terrain pour contribuer à la mise en place de solutions durables.",
+    "image": "collaboration.jpg",
+    "link": "#contact",
+    "linkText": "Échanger avec nous",
+    "order": 4
+  }
+]

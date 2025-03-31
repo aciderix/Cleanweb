@@ -52,4 +52,16 @@ collections:
       - {label: "Nom", name: "name", widget: "string"}
       - {label: "Logo", name: "logo", widget: "image"}
       - {label: "URL", name: "url", widget: "string"}
+      - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1}
+  - name: "activities"
+    label: "Activités Phares"
+    folder: "_activities"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Titre", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Image", name: "image", widget: "image"}
+      - {label: "Lien", name: "link", widget: "string", default: "#contact"}
+      - {label: "Texte du lien", name: "linkText", widget: "string", default: "En savoir plus"}
       - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1} 
