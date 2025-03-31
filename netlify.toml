@@ -40,11 +40,10 @@
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
 
-# Ajouter des headers de sécurité
+# Ajouter des headers de sécurité avec une CSP plus permissive
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' https://cdn.auth0.com https://unpkg.com 'unsafe-inline'; style-src 'self' https://unpkg.com 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.github.com https://api.netlify.com;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-eval' https://cdn.auth0.com https://unpkg.com 'unsafe-inline'; style-src 'self' https://unpkg.com 'unsafe-inline'; img-src 'self' data: blob: https://*; connect-src 'self' https://api.github.com https://api.netlify.com https://*; frame-src 'self' https://*;"
     X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"
