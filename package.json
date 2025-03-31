@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx netlify-cms-proxy-server",
-    "build": "node netlify/functions/regenerate-events.js && mkdir -p _events_copy && cp -r _events/* _events_copy/ && ls -la _events_copy",
-    "generate-events": "node netlify/functions/regenerate-events.js"
+    "build": "node netlify/functions/regenerate-events.js && mkdir -p _events_copy && cp -r _events/* _events_copy/ && ls -la _events_copy && node scripts/inject-env.js",
+    "generate-events": "node netlify/functions/regenerate-events.js",
+    "inject-env": "node scripts/inject-env.js"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",

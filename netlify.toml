@@ -30,7 +30,7 @@
   force = true
 
 [build.environment]
-  NODE_VERSION = "16"
+  NODE_VERSION = "18.18.0"
 
 # Permettre l'exécution de fonctions après chaque déploiement
 [build.processing]
@@ -40,5 +40,11 @@
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
 
-[[plugins]]
-  package = "./netlify/build-plugins/inject-env"
+# Ajouter des headers de sécurité
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://cdn.auth0.com https://unpkg.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
