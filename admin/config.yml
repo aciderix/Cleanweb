@@ -32,6 +32,7 @@ collections:
     folder: "_events"  # Conserver pour compatibilité
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: "title"
     # Utiliser notre API MongoDB personnalisée
     extension: json
     format: json
