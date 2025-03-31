@@ -40,6 +40,13 @@
   to = "/.netlify/functions/regenerate-events"
   status = 200
 
+# Redirection pour tester la connexion à MongoDB
+[[redirects]]
+  from = "/test-db"
+  to = "/.netlify/functions/test-db"
+  status = 200
+  force = true
+
 # Variables d'environnement pour les fonctions serverless
 [build.environment]
   NODE_VERSION = "16"

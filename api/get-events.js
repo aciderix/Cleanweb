@@ -14,13 +14,16 @@ exports.handler = async function(event, context) {
   
   let client;
   try {
-    // Établir la connexion à MongoDB
+    console.log('Tentative de connexion à MongoDB...');
     client = await createMongoClient();
+    console.log('Connexion à MongoDB établie');
+    
     const db = client.db(DB_NAME);
     const collection = db.collection(COLLECTION_NAME);
     
-    // Récupérer tous les événements triés par ordre
+    console.log('Récupération des événements...');
     const events = await collection.find({}).sort({ order: 1 }).toArray();
+    console.log(`${events.length} événements récupérés:`, JSON.stringify(events));
     
     // Convertir les ObjectId en strings pour JSON
     const serializedEvents = events.map(event => ({
@@ -39,7 +42,7 @@ exports.handler = async function(event, context) {
     };
     
   } catch (error) {
-    console.error('Erreur lors de la récupération des événements:', error);
+    console.error('Erreur détaillée:', error);
     
     // En cas d'erreur, essayer de charger depuis le fichier JSON de sauvegarde
     try {
