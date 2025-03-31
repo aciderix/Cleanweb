@@ -29,12 +29,6 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/get-intervention-zones"
-  to = "/.netlify/functions/get-intervention-zones"
-  status = 200
-  force = true
-
 [build.environment]
   NODE_VERSION = "18.18.0"
 
