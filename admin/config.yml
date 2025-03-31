@@ -42,4 +42,14 @@ collections:
       - {label: "Lien", name: "link", widget: "string", default: "#contact"}
       - {label: "Texte du lien", name: "linkText", widget: "string", default: "Plus d'informations"}
       - {label: "Publication date", name: "publishDate", widget: "datetime"}
+      - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1}
+  - name: "partners"
+    label: "Partenaires"
+    folder: "_partners"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Nom", name: "name", widget: "string"}
+      - {label: "Logo", name: "logo", widget: "image"}
+      - {label: "URL", name: "url", widget: "string"}
       - {label: "Ordre d'affichage", name: "order", widget: "number", default: 1} 

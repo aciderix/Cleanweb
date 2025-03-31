@@ -23,6 +23,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/get-partners"
+  to = "/.netlify/functions/get-partners"
+  status = 200
+  force = true
+
 [build.environment]
   NODE_VERSION = "16"
 
