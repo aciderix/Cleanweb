@@ -1,29 +1,32 @@
 [
   {
-    "title": "Première Éco-Navigation avec La Toue",
-    "date": "Prochainement",
-    "description": "Venez découvrir notre nouvelle formule de nettoyage de l'Erdre à bord de La Toue. Une expérience unique alliant action écologique et découverte du patrimoine fluvial.",
-    "image": "/images/uploads/bateau.png",
+    "id": "static-1",
+    "title": "Collectes sur l'Erdre",
+    "date": "Tous les mois",
+    "description": "Rejoignez-nous pour une collecte de déchets le long de l'Erdre. Cette action permettra de nettoyer les berges et de sensibiliser le public à la pollution des cours d'eau.",
+    "image": null,
     "link": "#contact",
-    "linkText": "Se tenir informé",
+    "linkText": "S'inscrire",
     "order": 1
   },
   {
-    "title": "Rendez-vous de l'Erdre",
-    "date": "À venir",
-    "description": "Retrouvez-nous lors des Rendez-vous de l'Erdre pour échanger sur nos actions et découvrir comment participer à la préservation de nos rivières.",
-    "image": "/images/uploads/sensibilisation.jpg",
+    "id": "static-2",
+    "title": "Rendez-vous sur l'Erdre",
+    "date": "Août 2025",
+    "description": "Retrouvez-nous pendant le festival des Rendez-vous de l'Erdre pour des animations de sensibilisation et des démonstrations de notre travail de collecte.",
+    "image": null,
     "link": "#contact",
-    "linkText": "Plus d'informations",
+    "linkText": "En savoir plus",
     "order": 2
   },
   {
-    "title": "Collectes sur l'Erdre",
-    "date": "En continu",
-    "description": "Nos actions de collecte se poursuivent régulièrement sur l'Erdre. Contactez-nous pour connaître les prochaines dates et rejoindre notre équipe de bénévoles.",
-    "image": "/images/uploads/bac.jpg",
+    "id": "static-3",
+    "title": "Formation Bacs à Déchets",
+    "date": "Prochainement",
+    "description": "Formation à l'utilisation et l'entretien des bacs à déchets flottants. Venez découvrir comment ces dispositifs innovants contribuent à la préservation de nos rivières.",
+    "image": null,
     "link": "#contact",
-    "linkText": "Nous contacter",
+    "linkText": "S'inscrire",
     "order": 3
   }
 ] 
